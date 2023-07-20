@@ -20,13 +20,32 @@ RSpec.describe Ship do
             cruiser = Ship.new("Cruiser", 3)
             expect(cruiser.health).to eq(3)
         end
+
+        it "can read the health after being hit" do
+            cruiser = Ship.new("Cruiser", 3)
+            expect(cruiser.health).to eq(3)
+            cruiser.hit
+            expect(cruiser.health).to eq(2)
+            cruiser.hit
+            expect(cruiser.health).to eq(1)
+            cruiser.hit
+            expect(cruiser.health).to eq(0)
+        end
+        #We may want to add an edge case when you try to not allow it to go to a negative value"
     end
 
     describe '#sunk?' do
         it "can tell if the ship is sunk" do
             cruiser = Ship.new("Cruiser", 3)
             expect(cruiser.sunk?).to eq(false)
+            cruiser.hit
+            expect(cruiser.sunk?).to eq(false)
+            cruiser.hit
+            expect(cruiser.sunk?).to eq(false)
+            cruiser.hit
+            expect(cruiser.sunk?).to eq(true)
         end
+    
     end
 
 end

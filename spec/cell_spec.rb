@@ -37,6 +37,5 @@ RSpec.describe Cell do
       expect(cell.ship).to eq(cruiser)
       expect(cell.empty?).to eq(false)
     end
-      
   end
 end

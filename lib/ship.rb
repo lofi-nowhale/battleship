@@ -1,17 +1,19 @@
 class Ship
-    attr_reader :name, :length, :health
-    def initialize(name, length)
-        @name = name
-        @length = length
-        @health = length
-        #Not in love with this solution, let me know if you think there is a better way to store this attribute"
-    end
+  attr_reader :name, :length, :health
+  def initialize(name, length)
+    @name = name
+    @length = length
+    @health = length
+    @sunk = false
 
-    def sunk?
-        health == 0
-    end
+  end
+
+  def sunk?
+    health == 0
+  end
     
-    def hit
-        @health -= 1
+  def hit
+    if @health > 0
+      @health -= 1
     end
 end

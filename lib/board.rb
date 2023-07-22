@@ -20,7 +20,7 @@ class Board
   end
   
   def valid_placement?(ship, placement_coordinates)
-    if ship.length != placement_coordinates.length && 
+    if ship.length != placement_coordinates.length
       false
     else true
     end

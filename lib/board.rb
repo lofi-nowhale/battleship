@@ -9,7 +9,7 @@ class Board
     ('A'..'D').each do |letter|
       (1..4).each do |number|
         coordinate = "#{letter}#{number}"
-        cell_default = '*'
+        cell_default = Cell.new(coordinate)
         @cells[coordinate] = cell_default
       end
     end

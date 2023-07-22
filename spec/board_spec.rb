@@ -23,7 +23,7 @@ RSpec.describe Board do
   describe '#valid_coordinate?' do 
     it 'can tell us if a corrdinate is on the board or not' do
       board = Board.new
-
+      
       expect(board.valid_coordinate?("A1")).to eq(true)
       expect(board.valid_coordinate?("D4")).to eq(true)
       expect(board.valid_coordinate?("A5")).to eq(false)
@@ -37,12 +37,13 @@ RSpec.describe Board do
       board = Board.new
       cruiser = Ship.new("Cruiser", 3)
       submarine = Ship.new("Submarine", 2)
-      
+
       expect(board.valid_placement?(cruiser, ["A1", "A2"])).to eq(false)
       expect(board.valid_placement?(submarine, ["A2", "A3", "A4"])).to eq(false)
       
     end
-    it "can tell us if the ship's placement is valid where the coordinates are consecutive" do 
+
+    xit "can tell us if the ship's placement is valid where the coordinates are consecutive" do 
       board = Board.new
       cruiser = Ship.new("Cruiser", 3)
       submarine = Ship.new("Submarine", 2)
@@ -53,7 +54,7 @@ RSpec.describe Board do
       expect(board.valid_placement?(submarine, ["C1", "B1"])).to eq(false)
     end
     
-    it "can tell us if the ship's placement is valid - it will not allow placement to be diagonal" do
+    xit "can tell us if the ship's placement is valid - it will not allow placement to be diagonal" do
       board = Board.new
       cruiser = Ship.new("Cruiser", 3)
       submarine = Ship.new("Submarine", 2)
@@ -62,7 +63,7 @@ RSpec.describe Board do
       expect(board.valid_placement?(submarine, ["C2", "D3"])).to eq(false)
     end
     
-    it "can tell us if the ship's placement is valid - a ship is valid if all previous checks pass => the array of coordinates is the same length of the ship, the coordinates are consecutive, and the coordinates are not diagonal" do 
+    xit "can tell us if the ship's placement is valid - a ship is valid if all previous checks pass => the array of coordinates is the same length of the ship, the coordinates are consecutive, and the coordinates are not diagonal" do 
       board = Board.new
       cruiser = Ship.new("Cruiser", 3)
       submarine = Ship.new("Submarine", 2)

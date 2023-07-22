@@ -15,7 +15,8 @@ RSpec.describe Board do
     it "can contain many cells from the start" do
       board = Board.new
       expect(board.cells).not_to eq({})
-      # expect(board.cells).to have(16).things
+      # require 'pry';binding.pry
+      expect(board.cells.length).to eq(16)
     end
   end
 end

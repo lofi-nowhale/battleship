@@ -63,7 +63,7 @@ RSpec.describe Board do
       expect(board.valid_placement?(submarine, ["C2", "D3"])).to eq(false)
     end
     
-    xit "can tell us if the ship's placement is valid - a ship is valid if all previous checks pass => the array of coordinates is the same length of the ship, the coordinates are consecutive, and the coordinates are not diagonal" do 
+    it "can tell us if the ship's placement is valid - a ship is valid if all previous checks pass => the array of coordinates is the same length of the ship, the coordinates are consecutive, and the coordinates are not diagonal" do 
       board = Board.new
       cruiser = Ship.new("Cruiser", 3)
       submarine = Ship.new("Submarine", 2)

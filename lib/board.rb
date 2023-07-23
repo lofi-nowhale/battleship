@@ -23,11 +23,15 @@ class Board
     if ship.length != placement_coordinates.length
       false
     elsif !coordinate_logic_letters(placement_coordinates)
-      return false
+      false
+    elsif !coordinate_logic_numbers(ship, placement_coordinates)
+      false
     else true
     end
    
   end
+
+
 
   def coordinate_logic_letters(placement_coordinates)
     letters = placement_coordinates.map do |coordinate|
@@ -40,7 +44,7 @@ class Board
     numbers = placement_coordinates.map do |coordinate|
       coordinate[1].to_i
     end
+    numbers == (numbers.min..numbers.max).to_a
   end
-
 end
 

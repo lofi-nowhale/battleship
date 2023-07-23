@@ -58,5 +58,12 @@ class Board
     end
     letters == (letters.min..letters.max).to_a && letters.length == ship.length
   end
+
+
+  def place(ship, placement_coordinates)
+    placement_coordinates.each do |new_coordinate|
+     @cells[new_coordinate].place_ship(ship)
+    end
+  end
 end
 

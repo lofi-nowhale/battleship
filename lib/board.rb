@@ -40,11 +40,11 @@ class Board
     letters.uniq.length == 1
   end
 
-  def coordinate_logic_numbers(placement_coordinates)
+  def coordinate_logic_numbers(ship, placement_coordinates)
     numbers = placement_coordinates.map do |coordinate|
       coordinate[1].to_i
     end
-    numbers == (numbers.min..numbers.max).to_a
+    numbers == (numbers.min..numbers.max).to_a && numbers.length == ship.length
   end
 end
 

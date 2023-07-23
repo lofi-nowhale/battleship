@@ -19,32 +19,44 @@ class Board
     @cells.include?(coordinate)
   end
   
+  # if time - refactor valid placement && and || stuff
   def valid_placement?(ship, placement_coordinates)
     if ship.length != placement_coordinates.length
       false
-    elsif !coordinate_logic_letters(placement_coordinates)
-      false
-    elsif !coordinate_logic_numbers(ship, placement_coordinates)
-      false
-    else true
+    elsif coordinate_horizontal_letters_logic(placement_coordinates) && coordinate_horizontal_numbers_logic(ship, placement_coordinates) || coordinate_vertical_number_logic(placement_coordinates) && coordinate_verticle_letter_logic(ship, placement_coordinates)
+      true
+    else false
     end
    
   end
 
-
-
-  def coordinate_logic_letters(placement_coordinates)
+# if time - refactor to put this in a module? 
+  def coordinate_horizontal_letters_logic(placement_coordinates)
     letters = placement_coordinates.map do |coordinate|
     coordinate[0]
     end
     letters.uniq.length == 1
   end
 
-  def coordinate_logic_numbers(ship, placement_coordinates)
+  def coordinate_horizontal_numbers_logic(ship, placement_coordinates)
     numbers = placement_coordinates.map do |coordinate|
       coordinate[1].to_i
     end
     numbers == (numbers.min..numbers.max).to_a && numbers.length == ship.length
+  end
+
+  def coordinate_vertical_number_logic(placement_coordinates)
+    numbers = placement_coordinates.map do |coordinate|
+    coordinate[1].to_i
+    end
+    numbers.uniq.length == 1
+  end
+
+  def coordinate_verticle_letter_logic(ship, placement_coordinates)
+    letters = placement_coordinates.map do |coordinate|
+      coordinate[0].ord
+    end
+    letters == (letters.min..letters.max).to_a && letters.length == ship.length
   end
 end
 

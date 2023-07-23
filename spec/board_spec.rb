@@ -12,10 +12,9 @@ RSpec.describe Board do
   end
 
   describe '#cells' do
-    it "can contain many cells from the start" do
+    it "contains the necessary cells for the board" do
       board = Board.new
       expect(board.cells).not_to eq({})
-      # require 'pry';binding.pry
       expect(board.cells.length).to eq(16)
     end
   end
@@ -40,10 +39,11 @@ RSpec.describe Board do
 
       expect(board.valid_placement?(cruiser, ["A1", "A2"])).to eq(false)
       expect(board.valid_placement?(submarine, ["A2", "A3", "A4"])).to eq(false)
+      expect(board.valid_placement?(cruiser, ["A2", "A3", "A4"])).to eq(true)
       
     end
 
-    xit "can tell us if the ship's placement is valid where the coordinates are consecutive" do 
+    it "can tell us if the ship's placement is valid where the coordinates are consecutive" do 
       board = Board.new
       cruiser = Ship.new("Cruiser", 3)
       submarine = Ship.new("Submarine", 2)
@@ -54,7 +54,7 @@ RSpec.describe Board do
       expect(board.valid_placement?(submarine, ["C1", "B1"])).to eq(false)
     end
     
-    xit "can tell us if the ship's placement is valid - it will not allow placement to be diagonal" do
+    it "can tell us if the ship's placement is valid - it will not allow placement to be diagonal" do
       board = Board.new
       cruiser = Ship.new("Cruiser", 3)
       submarine = Ship.new("Submarine", 2)

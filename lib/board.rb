@@ -22,10 +22,29 @@ class Board
   def valid_placement?(ship, placement_coordinates)
     if ship.length != placement_coordinates.length
       false
+    elsif !coordinate_logic_letters(placement_coordinates)
+      false
+    elsif !coordinate_logic_numbers(ship, placement_coordinates)
+      false
     else true
     end
    
   end
 
 
+
+  def coordinate_logic_letters(placement_coordinates)
+    letters = placement_coordinates.map do |coordinate|
+    coordinate[0]
+    end
+    letters.uniq.length == 1
+  end
+
+  def coordinate_logic_numbers(ship, placement_coordinates)
+    numbers = placement_coordinates.map do |coordinate|
+      coordinate[1].to_i
+    end
+    numbers == (numbers.min..numbers.max).to_a && numbers.length == ship.length
+  end
 end
+

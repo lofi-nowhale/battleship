@@ -91,7 +91,7 @@ RSpec.describe Board do
       expect(cell_1 == cell_2).to eq(false)
     end
   end
-  
+
   describe '#overlapping ships' do 
     it 'can prevent the placement of a ship in an already occupied cell' do 
       board = Board.new

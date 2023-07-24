@@ -70,6 +70,8 @@ class Board
     placement_coordinates.each do |new_coordinate|
       return @cells[new_coordinate].ship
     end
+  end
+  
   def render(user = false)
     if user == true
       puts "  1 2 3 4 /n"

@@ -103,4 +103,15 @@ RSpec.describe Board do
       expect(board.valid_placement?(submarine, ["A1", "B1"])).to eq(false)
     end
   end
+  
+  describe '#render' do
+    it "can render the entire board" do
+      #needs actual tests 
+      board = Board.new
+      cruiser = Ship.new("Cruiser", 3)
+      board.place(cruiser, ["A1", "A2", "A3"])
+      board.render
+      board.render(true)
+    end
+  end
 end

@@ -13,12 +13,14 @@ class Game
   def start_game
     puts "Welcome to BATTLESHIP"
     puts "Enter p to play. Enter q to quit."
-    choice = gets 
-    if choice == p 
-      board.render
-    elsif choice == q
+    choice = gets.chomp
+    if choice == "p" 
+      puts "Let's Fucking Go!"
+      #needs to be some sort of method
+    elsif choice == "q"
       exit
-    else puts "You're not very good at following directions."
+    else 
+      puts "You're not very good at following directions."
     end
   end
 end

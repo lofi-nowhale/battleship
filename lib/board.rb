@@ -23,11 +23,12 @@ class Board
   def valid_placement?(ship, placement_coordinates)
     if ship.length != placement_coordinates.length
       false
+    elsif occupied_cells(placement_coordinates)
+      false
     elsif coordinate_horizontal_letters_logic(placement_coordinates) && coordinate_horizontal_numbers_logic(ship, placement_coordinates) || coordinate_vertical_number_logic(placement_coordinates) && coordinate_verticle_letter_logic(ship, placement_coordinates)
       true
     else false
     end
-   
   end
 
 # if time - refactor to put this in a module? 
@@ -59,10 +60,15 @@ class Board
     letters == (letters.min..letters.max).to_a && letters.length == ship.length
   end
 
-
   def place(ship, placement_coordinates)
     placement_coordinates.each do |new_coordinate|
      @cells[new_coordinate].place_ship(ship)
+    end
+  end
+
+  def occupied_cells(placement_coordinates)
+    placement_coordinates.each do |new_coordinate|
+      return @cells[new_coordinate].ship
     end
   end
 end

@@ -9,6 +9,7 @@ class Game
   attr_reader :board
   def initialize
     @board = Board.new
+    @player_board = Board.new
     start_game
   end
   
@@ -21,7 +22,11 @@ class Game
       comp_place_cruiser
       comp_place_sub
       @board.render(true)
-      p "I've placed my ships, place yours now"
+      p "I have laid out my ships on the grid."
+      p "You now need to lay out your two ships."
+      p "The Cruiser is three units long and the Submarine is two units long."
+      @player_board.render
+      player_setup
       exit
     elsif choice == "q"
       exit

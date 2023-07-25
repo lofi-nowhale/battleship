@@ -25,8 +25,11 @@ class Game
       p "I have laid out my ships on the grid."
       p "You now need to lay out your two ships."
       p "The Cruiser is three units long and the Submarine is two units long."
-      @player_board.render
-      player_setup
+      player_cruiser_placement
+      @player_board.render(true)
+      player_sub_placement
+      @player_board.render(true)
+      
       exit
     elsif choice == "q"
       exit
@@ -63,6 +66,46 @@ class Game
       break
       end
     end
+  end
+
+  def player_cruiser_placement
+    @player_board.render
+    loop do
+      p "Let's place your cruiser. Gimme 3 coordinates!"
+      #if time - lets refactor this uggo/ new directions to specify for the user the format
+    
+      player_coordinates = gets.chomp
+
+      p @player_cruiser_coords = player_coordinates.to_s.split
+      @player_cruiser = Ship.new("Cruiser", 3)
+      
+      if !@player_board.valid_placement?(@player_cruiser, @player_cruiser_coords)
+        p "try again...smh"
+      end
+
+      break if @player_board.valid_placement?(@player_cruiser, @player_cruiser_coords)
+    end
+    @player_board.place(@player_cruiser, @player_cruiser_coords)
+  end
+
+  def player_sub_placement
+    @player_board.render
+    loop do
+      p "Let's place your submarine. Gimme 2 coordinates!"
+      #if time - lets refactor this uggo/ new directions to specify for the user the format
+    
+      player_coordinates = gets.chomp
+
+      p @player_sub_coords = player_coordinates.to_s.split
+      @player_sub = Ship.new("Submarine", 2)
+      
+      if !@player_board.valid_placement?(@player_sub, @player_sub_coords)
+        p "try again...smh"
+      end
+
+      break if @player_board.valid_placement?(@player_sub, @player_sub_coords)
+    end
+    @player_board.place(@player_sub, @player_sub_coords)
   end
 
 end

@@ -20,6 +20,7 @@ class Game
       puts "Let's Fucking Go!"
       # create_new_board
       comp_place_ship
+      @board.render(true)
     elsif choice == "q"
       exit
     else 
@@ -34,8 +35,19 @@ class Game
 
   def comp_place_ship
     cruiser = Ship.new("Cruiser", 3)
-    @board.place(cruiser, ["A1", "A2", "A3"])
+    placement_coordinates = []
+
+    loop do
+      spot_1 = @board.cells.keys.sample
+      spot_2 = @board.cells.keys.sample
+      spot_3 = @board.cells.keys.sample
+    
+        if @board.valid_placement?(cruiser, [spot_1, spot_2, spot_3])
+          @board.place(cruiser, [spot_1, spot_2, spot_3])
+        break
+
+      end
+    end
 
   end
-
 end

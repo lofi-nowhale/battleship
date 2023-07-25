@@ -68,6 +68,7 @@ class Board
 
   def occupied_cells(placement_coordinates)
     placement_coordinates.each do |new_coordinate|
+      #Small thing I just noticed.  We may want to add return true if.
       return @cells[new_coordinate].ship
     end
   end

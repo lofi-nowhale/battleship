@@ -34,12 +34,6 @@ class Game
         computer_shot
         results
         break if @cruiser.sunk? && @submarine.sunk? || @player_cruiser.sunk? && @player_sub.sunk?
-        if @cruiser.sunk? && @submarine.sunk?
-          puts "You won!"
-        else 
-          puts "I won!"
-        end
-
       end
 
     elsif choice == "q"

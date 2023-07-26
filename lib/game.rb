@@ -33,8 +33,12 @@ class Game
         player_shot
         computer_shot
         results
+        win_condition
         break if @cruiser.sunk? && @submarine.sunk? || @player_cruiser.sunk? && @player_sub.sunk?
       end
+
+      @board = Board.new
+      @player_board = Board.new
 
     elsif choice == "q"
       exit
@@ -157,6 +161,15 @@ class Game
     end
   end
 
+  def player_sunk_ship?
+    if @board.cells[@formatted_player_shot].ship == @cruiser && @cruiser.sunk?
+      puts "You sunk my cruiser!"
+    end
+    if @board.cells[@formatted_player_shot].ship == @submarine && @submarine.sunk?
+      puts "You sunk my submarine!"
+    end
+  end
+
   def computer_hit_or_miss
     if @player_board.cells[@c_shot].ship
       @second_response = "hit"
@@ -165,10 +178,31 @@ class Game
     end
   end
 
+  def computer_sunk_ship?
+    if @player_board.cells[@c_shot].ship == @player_cruiser && @player_cruiser.sunk?
+      puts "I sunk your cruiser!"
+    end
+    if @player_board.cells[@c_shot].ship == @player_sub && @player_sub.sunk?
+      puts "I sunk your submarine!"
+    end
+  end
+
   def results
     player_hit_or_miss
     computer_hit_or_miss
     puts "Your shot on #{@formatted_player_shot} was a #{@first_response}."
+    player_sunk_ship?
     puts "My shot on #{@c_shot} was a #{@second_response}."
+    computer_sunk_ship?
+  end
+
+  def win_condition
+    if @player_cruiser.sunk? && @player_sub.sunk?
+      puts "I won!"
+    elsif @cruiser.sunk? && @submarine.sunk?
+      puts "You won!"
+    else 
+      puts "Next round!"
+    end
   end
 end

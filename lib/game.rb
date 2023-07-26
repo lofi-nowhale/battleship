@@ -69,21 +69,12 @@ class Game
   def comp_place_sub
     @submarine = Ship.new("Submarine", 2)
 
-    # sub_coord_1 = @board.cells.keys.sample
-    # sub_coord_2 = @board.cells.keys.sample
-
-    # until @board.valid_placement?(@submarine, [sub_coord_1, sub_coord_2])
-    #   sub_coord_1 = @board.cells.keys.sample
-    #   sub_coord_2 = @board.cells.keys.sample
-    # end
-
-    # @board.place(@submarine, [sub_coord_1, sub_coord_2])
-
     loop do 
       sub_coord_1 = @board.cells.keys.sample
       sub_coord_2 = @board.cells.keys.sample
 
-      if @board.valid_placement?(@submarine, [sub_coord_1, sub_coord_2])
+
+      if !@board.cells[sub_coord_1].ship && !@board.cells[sub_coord_2].ship && @board.valid_placement?(@submarine, [sub_coord_1, sub_coord_2])
         @board.place(@submarine, [sub_coord_1, sub_coord_2])
       break
       end
@@ -160,7 +151,7 @@ class Game
     loop do
       @c_shot = @board.cells.keys.sample
 
-      break if !@board.cells[@c_shot].fired_upon? 
+      break if !@player_board.cells[@c_shot].fired_upon? 
       # && !@computer_shots.include?(@c_shot)
     end
 

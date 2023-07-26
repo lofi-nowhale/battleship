@@ -106,12 +106,10 @@ RSpec.describe Board do
   
   describe '#render' do
     it "can render the entire board" do
-      #needs actual tests 
       board = Board.new
       cruiser = Ship.new("Cruiser", 3)
       board.place(cruiser, ["A1", "A2", "A3"])
-      board.render
-      board.render(true)
+      board.render 
     end
   end
 end

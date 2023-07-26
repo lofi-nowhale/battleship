@@ -34,10 +34,14 @@ class Game
         computer_shot
         results
         break if @cruiser.sunk? && @submarine.sunk? || @player_cruiser.sunk? && @player_sub.sunk?
+        if @cruiser.sunk? && @submarine.sunk?
+          puts "You won!"
+        else 
+          puts "I won!"
+        end
+
       end
-      
-      
-      exit
+
     elsif choice == "q"
       exit
     else 
@@ -151,8 +155,26 @@ class Game
   
   end
 
+  def player_hit_or_miss
+    if @board.cells[@formatted_player_shot].ship
+      @first_response = "hit"
+    else 
+      @first_response = 'miss'
+    end
+  end
+
+  def computer_hit_or_miss
+    if @player_board.cells[@c_shot].ship
+      @second_response = "hit"
+    else 
+      @second_response = 'miss'
+    end
+  end
+
   def results
-    puts "Your shot on #{@formatted_player_shot} was a ."
-    puts "My shot on #{@c_shot} was a ."
+    player_hit_or_miss
+    computer_hit_or_miss
+    puts "Your shot on #{@formatted_player_shot} was a #{@first_response}."
+    puts "My shot on #{@c_shot} was a #{@second_response}."
   end
 end

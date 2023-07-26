@@ -29,11 +29,11 @@ class Cell
     if fired_upon? && @ship == nil
       return "M"
     elsif
-      fired_upon? && @ship && ship.sunk?
-      "X"
-    elsif
       fired_upon? && @ship 
       "H"
+    elsif
+      fired_upon? && @ship && ship.sunk?
+      "X"
     elsif 
       user == true && @ship
       "S"

@@ -25,18 +25,18 @@ class Cell
     end
   end
 
-  def render(user = false)
+  def render(user = false) #Had to slightly change this because shots werent rendering correctly.  Was out of order
     if fired_upon? && @ship == nil
       return "M"
-    elsif 
-      user == true && @ship
-      "S"
     elsif
       fired_upon? && @ship && ship.sunk?
       "X"
     elsif
-      fired_upon? && @ship
+      fired_upon? && @ship 
       "H"
+    elsif 
+      user == true && @ship
+      "S"
     else 
       return "."
     end

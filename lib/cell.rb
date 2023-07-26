@@ -27,7 +27,7 @@ class Cell
 
   def render(user = false) #Had to slightly change this because shots werent rendering correctly.  Was out of order
     if fired_upon? && @ship == nil
-      return "M"
+      "M"
     elsif
       fired_upon? && @ship && ship.sunk?
       "X"
@@ -38,8 +38,7 @@ class Cell
       user == true && @ship
       "S"
     else 
-      return "."
+      "."
     end
   end
-
 end

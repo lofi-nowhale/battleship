@@ -22,14 +22,11 @@ class Game
       puts "Lets go!!"
       comp_place_cruiser
       comp_place_sub
-      @board.render(true)
       puts "I have laid out my ships on the grid."
       puts "You now need to lay out your two ships."
       puts "The Cruiser is three units long and the Submarine is two units long."
       player_cruiser_placement
-      @player_board.render(true)
       player_sub_placement
-      @player_board.render(true)
       loop do
         round_start
         player_shot
@@ -38,10 +35,8 @@ class Game
         win_condition
         break if @cruiser.sunk? && @submarine.sunk? || @player_cruiser.sunk? && @player_sub.sunk?
       end
-
       @board = Board.new
       @player_board = Board.new
-      @computer_shots = []
 
     elsif choice == "q"
       exit
@@ -57,7 +52,7 @@ class Game
       c_coord_1 = @board.cells.keys.sample
       c_coord_2 = @board.cells.keys.sample
       c_coord_3 = @board.cells.keys.sample
-  
+
         if @board.valid_placement?(@cruiser, [c_coord_1, c_coord_2, c_coord_3])
           @board.place(@cruiser, [c_coord_1, c_coord_2, c_coord_3])
         break
@@ -73,7 +68,6 @@ class Game
       sub_coord_1 = @board.cells.keys.sample
       sub_coord_2 = @board.cells.keys.sample
 
-
       if !@board.cells[sub_coord_1].ship && !@board.cells[sub_coord_2].ship && @board.valid_placement?(@submarine, [sub_coord_1, sub_coord_2])
         @board.place(@submarine, [sub_coord_1, sub_coord_2])
       break
@@ -82,14 +76,11 @@ class Game
   end
 
   def player_cruiser_placement
-    @player_board.render
     loop do
-      puts "Let's place your cruiser. Gimme 3 coordinates!"
-      #if time - lets refactor this uggo/ new directions to specify for the user the format
-    
+      puts "Let's place your cruiser. You will need a capital letter and a number, with each coordinate separated by a space.  Now gimme 3 coordinates!"
       player_coordinates = gets.chomp
 
-      p @player_cruiser_coords = player_coordinates.to_s.split
+      @player_cruiser_coords = player_coordinates.to_s.split
       @player_cruiser = Ship.new("Cruiser", 3)
       
       if !@player_board.valid_placement?(@player_cruiser, @player_cruiser_coords)
@@ -102,14 +93,12 @@ class Game
   end
 
   def player_sub_placement
-    @player_board.render
     loop do
       puts "Let's place your submarine. Gimme 2 coordinates!"
-      #if time - lets refactor this uggo/ new directions to specify for the user the format
-    
+      
       player_coordinates = gets.chomp
 
-      p @player_sub_coords = player_coordinates.to_s.split
+      @player_sub_coords = player_coordinates.to_s.split
       @player_sub = Ship.new("Submarine", 2)
       
       if !@player_board.valid_placement?(@player_sub, @player_sub_coords)
@@ -140,26 +129,19 @@ class Game
 
       break if @board.valid_coordinate?(@formatted_player_shot) && !@board.cells[@formatted_player_shot].fired_upon?
 
-    end #Not receiving any errors, but we will need to test the "re-shoot on a cell logic"
-
+    end 
     @board.cells[@formatted_player_shot].fire_upon
     @board.cells[@formatted_player_shot].render
   end
 
   def computer_shot
-
     loop do
       @c_shot = @board.cells.keys.sample
 
       break if !@player_board.cells[@c_shot].fired_upon? 
-      # && !@computer_shots.include?(@c_shot)
     end
-
-    #Although our fired upon? should work, I kept on getting repeats.  I added the @compuer_shots for redundancy until we can figure out the problem
-    # @computer_shots << @c_shot
     @player_board.cells[@c_shot].fire_upon
     @player_board.cells[@c_shot].render(true)
-  
   end
 
   def player_hit_or_miss

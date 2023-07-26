@@ -29,7 +29,13 @@ class Game
       @player_board.render(true)
       player_sub_placement
       @player_board.render(true)
-      turn_phase
+      loop do
+        player_shot
+        computer_shot
+        results
+        break if @cruiser.sunk? && @submarine.sunk? || @player_cruiser.sunk? && @player_sub.sunk?
+      end
+      
       
       exit
     elsif choice == "q"
@@ -40,15 +46,15 @@ class Game
   end 
 
   def comp_place_cruiser
-    cruiser = Ship.new("Cruiser", 3)
+    @cruiser = Ship.new("Cruiser", 3)
 
     loop do
       c_coord_1 = @board.cells.keys.sample
       c_coord_2 = @board.cells.keys.sample
       c_coord_3 = @board.cells.keys.sample
   
-        if @board.valid_placement?(cruiser, [c_coord_1, c_coord_2, c_coord_3])
-          @board.place(cruiser, [c_coord_1, c_coord_2, c_coord_3])
+        if @board.valid_placement?(@cruiser, [c_coord_1, c_coord_2, c_coord_3])
+          @board.place(@cruiser, [c_coord_1, c_coord_2, c_coord_3])
         break
 
       end
@@ -56,14 +62,14 @@ class Game
   end
 
   def comp_place_sub
-    submarine = Ship.new("Submarine", 2)
+    @submarine = Ship.new("Submarine", 2)
 
     loop do 
       sub_coord_1 = @board.cells.keys.sample
       sub_coord_2 = @board.cells.keys.sample
 
-      if @board.valid_placement?(submarine, [sub_coord_1, sub_coord_2])
-        @board.place(submarine, [sub_coord_1, sub_coord_2])
+      if @board.valid_placement?(@submarine, [sub_coord_1, sub_coord_2])
+        @board.place(@submarine, [sub_coord_1, sub_coord_2])
       break
       end
     end
@@ -109,7 +115,7 @@ class Game
     @player_board.place(@player_sub, @player_sub_coords)
   end
 
-  def turn_phase
+  def player_shot
     puts "=============COMPUTER BOARD============="
     @board.render
     puts "==============PLAYER BOARD=============="
@@ -118,15 +124,35 @@ class Game
     loop do
       puts "Enter the coordinate for your shot"
       player_shot = gets.chomp
-      formatted_player_shot = player_shot.to_s
+      @formatted_player_shot = player_shot.to_s
 
-      if !@board.valid_coordinate?(formatted_player_shot) || @board.cells[formatted_player_shot].fired_upon? 
+      if !@board.valid_coordinate?(@formatted_player_shot) || @board.cells[@formatted_player_shot].fired_upon? 
         puts "Please enter a valid coordinate"
       end
 
-      break if @board.valid_coordinate?(formatted_player_shot) && !@board.cells[formatted_player_shot].fired_upon?
+      break if @board.valid_coordinate?(@formatted_player_shot) && !@board.cells[@formatted_player_shot].fired_upon?
+
     end #Not receiving any errors, but we will need to test the "re-shoot on a cell logic"
+
+    @board.cells[@formatted_player_shot].fire_upon
+    @board.cells[@formatted_player_shot].render
+  end
+
+  def computer_shot
+
+    loop do
+      @c_shot = @board.cells.keys.sample
+
+      break if !@board.cells[@c_shot].fired_upon?
+    end
+
+    @player_board.cells[@c_shot].fire_upon
+    @player_board.cells[@c_shot].render(true)
   
   end
 
+  def results
+    puts "Your shot on #{@formatted_player_shot} was a ."
+    puts "My shot on #{@c_shot} was a ."
+  end
 end

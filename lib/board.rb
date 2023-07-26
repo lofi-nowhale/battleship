@@ -66,6 +66,7 @@ class Board
     end
   end
 
+  #Come back to this later 
   def occupied_cells(placement_coordinates)
     placement_coordinates.each do |new_coordinate|
       return @cells[new_coordinate].ship

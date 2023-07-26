@@ -151,7 +151,7 @@ class Game
     loop do
       @c_shot = @board.cells.keys.sample
 
-      break if !@board.cells[@c_shot].fired_upon? 
+      break if !@player_board.cells[@c_shot].fired_upon? 
       # && !@computer_shots.include?(@c_shot)
     end
 

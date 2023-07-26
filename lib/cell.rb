@@ -32,7 +32,7 @@ class Cell
       fired_upon? && @ship && ship.sunk?
       "X"
     elsif
-      fired_upon? && @ship 
+      fired_upon? && @ship && !ship.sunk?
       "H"
     elsif 
       user == true && @ship

@@ -10,6 +10,7 @@ class Game
   def initialize
     @board = Board.new
     @player_board = Board.new
+    @computer_shots = []
     start_game
   end
   
@@ -30,6 +31,7 @@ class Game
       player_sub_placement
       @player_board.render(true)
       loop do
+        round_start
         player_shot
         computer_shot
         results
@@ -39,6 +41,7 @@ class Game
 
       @board = Board.new
       @player_board = Board.new
+      @computer_shots = []
 
     elsif choice == "q"
       exit
@@ -65,6 +68,16 @@ class Game
 
   def comp_place_sub
     @submarine = Ship.new("Submarine", 2)
+
+    # sub_coord_1 = @board.cells.keys.sample
+    # sub_coord_2 = @board.cells.keys.sample
+
+    # until @board.valid_placement?(@submarine, [sub_coord_1, sub_coord_2])
+    #   sub_coord_1 = @board.cells.keys.sample
+    #   sub_coord_2 = @board.cells.keys.sample
+    # end
+
+    # @board.place(@submarine, [sub_coord_1, sub_coord_2])
 
     loop do 
       sub_coord_1 = @board.cells.keys.sample
@@ -117,12 +130,14 @@ class Game
     @player_board.place(@player_sub, @player_sub_coords)
   end
 
-  def player_shot
+  def round_start
     puts "=============COMPUTER BOARD============="
     @board.render
     puts "==============PLAYER BOARD=============="
     @player_board.render(true)
+  end
 
+  def player_shot
     loop do
       puts "Enter the coordinate for your shot"
       player_shot = gets.chomp
@@ -145,9 +160,12 @@ class Game
     loop do
       @c_shot = @board.cells.keys.sample
 
-      break if !@board.cells[@c_shot].fired_upon?
+      break if !@board.cells[@c_shot].fired_upon? 
+      # && !@computer_shots.include?(@c_shot)
     end
 
+    #Although our fired upon? should work, I kept on getting repeats.  I added the @compuer_shots for redundancy until we can figure out the problem
+    # @computer_shots << @c_shot
     @player_board.cells[@c_shot].fire_upon
     @player_board.cells[@c_shot].render(true)
   

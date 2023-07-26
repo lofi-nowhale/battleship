@@ -22,13 +22,14 @@ class Game
       comp_place_cruiser
       comp_place_sub
       @board.render(true)
-      p "I have laid out my ships on the grid."
-      p "You now need to lay out your two ships."
-      p "The Cruiser is three units long and the Submarine is two units long."
+      puts "I have laid out my ships on the grid."
+      puts "You now need to lay out your two ships."
+      puts "The Cruiser is three units long and the Submarine is two units long."
       player_cruiser_placement
       @player_board.render(true)
       player_sub_placement
       @player_board.render(true)
+      turn_phase
       
       exit
     elsif choice == "q"
@@ -71,7 +72,7 @@ class Game
   def player_cruiser_placement
     @player_board.render
     loop do
-      p "Let's place your cruiser. Gimme 3 coordinates!"
+      puts "Let's place your cruiser. Gimme 3 coordinates!"
       #if time - lets refactor this uggo/ new directions to specify for the user the format
     
       player_coordinates = gets.chomp
@@ -80,7 +81,7 @@ class Game
       @player_cruiser = Ship.new("Cruiser", 3)
       
       if !@player_board.valid_placement?(@player_cruiser, @player_cruiser_coords)
-        p "try again...smh"
+        puts "try again...smh"
       end
 
       break if @player_board.valid_placement?(@player_cruiser, @player_cruiser_coords)
@@ -91,7 +92,7 @@ class Game
   def player_sub_placement
     @player_board.render
     loop do
-      p "Let's place your submarine. Gimme 2 coordinates!"
+      puts "Let's place your submarine. Gimme 2 coordinates!"
       #if time - lets refactor this uggo/ new directions to specify for the user the format
     
       player_coordinates = gets.chomp
@@ -100,12 +101,32 @@ class Game
       @player_sub = Ship.new("Submarine", 2)
       
       if !@player_board.valid_placement?(@player_sub, @player_sub_coords)
-        p "try again...smh"
+        puts "try again...smh"
       end
 
       break if @player_board.valid_placement?(@player_sub, @player_sub_coords)
     end
     @player_board.place(@player_sub, @player_sub_coords)
+  end
+
+  def turn_phase
+    puts "=============COMPUTER BOARD============="
+    @board.render
+    puts "==============PLAYER BOARD=============="
+    @player_board.render(true)
+
+    loop do
+      puts "Enter the coordinate for your shot"
+      player_shot = gets.chomp
+      formatted_player_shot = player_shot.to_s
+
+      if !@board.valid_coordinate?(formatted_player_shot) || @board.cells[formatted_player_shot].fired_upon? 
+        puts "Please enter a valid coordinate"
+      end
+
+      break if @board.valid_coordinate?(formatted_player_shot) && !@board.cells[formatted_player_shot].fired_upon?
+    end #Not receiving any errors, but we will need to test the "re-shoot on a cell logic"
+  
   end
 
 end
